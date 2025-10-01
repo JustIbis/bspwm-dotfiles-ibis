@@ -1,0 +1,39 @@
+# Terminal
+super + Return
+    kitty
+
+# Browser
+super + b
+    firefox
+
+# Rofi app launcher
+super + d
+    rofi -show drun
+
+# Close window
+super + q
+    bspc node -c
+
+# Fullscreen
+super + f
+    bspc node -t fullscreen
+
+# Floating toggle
+super + shift + space
+    bspc node -t floating
+
+# Focus movement
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+# Move window
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+# Workspace switching
+super + {1-9,0}
+    bspc desktop -f {I,II,III,IV,V,VI,VII,VIII,IX,X}
+
+# Move window to workspace
+super + shift + {1-9,0}
+    bspc node -d {I,II,III,IV,V,VI,VII,VIII,IX,X}
