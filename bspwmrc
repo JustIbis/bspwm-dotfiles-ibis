@@ -1,0 +1,44 @@
+#! /bin/sh
+
+### ENV VARIABLES ###
+export TERMINAL="kitty"
+export BROWSER="firefox"
+export EDITOR="nano"
+
+### STARTUP PROGRAMS ###
+# Start compositor (rounded corners, vsync)
+picom --experimental-backends --config ~/.config/picom/picom.conf &
+
+# Start wallpaper + color theming (wpgtk)
+wpg -s "$(wpg -l | shuf -n1)" &    # pick random wallpaper each login
+
+# Start polybar
+~/.config/polybar/launch.sh &
+
+# Start GNOME services (for control center, settings daemon, theming)
+gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/gnome-settings-daemon/gsd-xsettings &
+
+# Start notification daemon
+dunst &
+
+### BSPWM SETTINGS ###
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+# Window gaps and borders
+bspc config border_width         2
+bspc config window_gap           10
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config focus_follows_pointer true
+
+# Colors (will be overwritten by wpgtk themes automatically)
+bspc config normal_border_color "#44475a"
+bspc config active_border_color "#6272a4"
+bspc config focused_border_color "#bd93f9"
+bspc config presel_feedback_color "#50fa7b"
+
+### KEYBINDINGS (sxhkd) ###
+pgrep -x sxhkd > /dev/null || sxhkd &
